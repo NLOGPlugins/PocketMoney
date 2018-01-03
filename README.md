@@ -6,12 +6,12 @@ PocketMoney
 
 사용법
 ---
-/money <set|add|take|see|pay|rank>
-/money set <player> <amount>
-/money take <player> <amount>
-/money see <player>
-/money pay <player> <amount>
-/money rank [page]
+/money <set|add|take|see|pay|rank> <br />
+/money set <player> <amount> <br />
+/money take <player> <amount> <br />
+/money see <player> <br />
+/money pay <player> <amount> <br />
+/money rank [page] <br />
 
 개발자들을 위한 사용법
 ---
