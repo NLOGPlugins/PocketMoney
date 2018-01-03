@@ -14,6 +14,7 @@ class RankSubCommand extends SubCommand {
     public function execute(CommandSender $sender, array $args): bool {
         //TODO: see rank
         $all = $this->getPlugin()->getAllMoney();
+        arsort($all);
         $page = isset($args[0]) ? (int)$args[0] : 1;
         $banned = [];
         foreach ($this->getPlugin()->getServer()->getNameBans()->getEntries() as $entry) $banned[] = $entry->getName();
