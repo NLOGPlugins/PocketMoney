@@ -15,9 +15,7 @@ class PocketMoney extends PluginBase {
      */
     private static $api;
     /**
-     * @var array $message
-     * @var array $config
-     * @var Config $money
+     * @var array
      */
     private $message, $config, $money;
 
@@ -42,7 +40,7 @@ class PocketMoney extends PluginBase {
     }
 
     public function saveAll() {
-
+        new Config($this->getDataFolder()."money.yml", Config::YAML)->setAll($this->money);
     }
 
     /**
