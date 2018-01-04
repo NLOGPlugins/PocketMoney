@@ -1,0 +1,15 @@
+#command
+command-usage: "§e[ PocketMoney ] 사용법: {USAGE}"
+command-description: "§e[ PocketMoney ] 설명: {DESCRIPTION}"
+permission-denied: "§y[ PocketMoney ] 해당 명령어의 권한을 가지고 있지 않습니다."
+command-error: "§e[ PocketMoney ] 명령어 실행중 에러가 발생하였습니다.!"
+set-command: "§e[ PocketMoney ] {ISSUER}가 {PLAYER}의 돈을 {AMOUNT}로 설정하였습니다."
+add-command: "§e[ PocketMoney ] {ISSUER}가 {PLAYER}의 돈을 {AMOUNT}만큼 추가하였습니다."
+take-command: "§e[ PocketMoney ] {ISSUER}가 {PLAYER}의 돈을 {AMOUNT} 빼앗았습니다."
+see-command: "§e[ PocketMoney ] {PLAYER}의 돈은 {AMOUNT} 입니다."
+set-command: "§e[ PocketMoney ] {ISSUER}가 {PLAYER}에게 {AMOUNT}를 지불하였습니다."
+rank-prefix: "§e[ Money Rank ] ========== {PAGE}/{MAX} =========="
+rank-format: "{RANK}. {PLAYER}: {MONEY}"
+
+#event
+login-error: "접속단계에서 에러가 발생했습니다. 다시 접속해 주세요."

@@ -40,7 +40,9 @@ class PocketMoney extends PluginBase {
     }
 
     public function saveAll() {
-        new Config($this->getDataFolder()."money.yml", Config::YAML)->setAll($this->money);
+        $money_config = new Config($this->getDataFolder()."money.yml", Config::YAML);
+        $money_config->setAll($this->money);
+        $money_config->save();
     }
 
     /**
@@ -67,7 +69,8 @@ class PocketMoney extends PluginBase {
     }
     
     public function getRankMaxPage(int $banned_cnt) :int {
-        return (int)ceil((count($this->money) - $banned_cnt) / 10);
+        $result = (int)ceil((count($this->money) - $banned_cnt) / 10);
+        return $result < 1 ? 1 : $result;
     }
     
     /**
