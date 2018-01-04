@@ -14,6 +14,25 @@ api:
   - 3.0.0-ALPHA15
 
 permissions:
-  pocketmoney.command:
+  pocketmoney.command.*:
     default: true
     description: allow money command
+    children:
+      pocketmoney.command.set:
+        default: op
+        description: allow money set command
+      pocketmoney.command.add:
+        default: op
+        description: allow money add command
+      pocketmoney.command.take:
+        default: op
+        description: allow money take command
+      pocketmoney.command.see:
+        default: true
+        description: allow money see command
+      pocketmoney.command.pay:
+        default: true
+        description: allow money pay command
+      pocketmoney.command.rank:
+        default: true
+        description: allow money rank command

@@ -38,11 +38,11 @@ class PocketMoney extends PluginBase {
         $this->saveResource("config.yml");
         $this->message = (new Config($this->getDataFolder()."message.yml", Config::YAML))->getAll();
         $this->config = (new Config($this->getDataFolder()."config.yml", Config::YAML))->getAll();
-        $this->money = new Config($this->getDataFolder()."money.yml", Config::YAML);
+        $this->money = (new Config($this->getDataFolder()."money.yml", Config::YAML))->getAll();
     }
 
     public function saveAll() {
-        $this->money->save();
+
     }
 
     /**
@@ -65,7 +65,34 @@ class PocketMoney extends PluginBase {
     }
 
     public function getAllMoney() :array {
-        return $this->money->getAll();
+        return $this->money;
+    }
+
+    public function getRankMaxPage(int $banned_cnt) :int {
+        return (int)ceil((count($this->money) - $banned_cnt) / 10);
+    }
+
+    /**
+     * @param int $page
+     * @return array
+     */
+    public function getRank(int $page) :array {
+        arsort($this->money);
+        $addOp = $this->config["rank-add-op"];
+        $ops = $this->getServer()->getOps()->getAll();
+        $banned = [];
+        foreach ($this->getServer()->getNameBans()->getEntries() as $entry) $banned[] = $entry->getName();
+        $max = $this->getRankMaxPage(count($banned));
+        $page = $page < 1 ? 1 : ($page > $max ? $max : $page);
+        $result = [];
+        $i = 1;
+        foreach ($this->money as $p => $m) {
+            if (isset($banned[$p])) continue;
+            if (!$addOp && isset($ops[$p])) continue;
+            if (((int)ceil($i / 10)) == $page) $result[$i] = [$p, $m];
+            $i++;
+        };
+        return $result;
     }
 
     /**
@@ -74,7 +101,7 @@ class PocketMoney extends PluginBase {
      */
     public function getMoney($player) {
         $player = $player instanceof Player ? $player->getName() : $player;
-        $result = $this->money->get($player);
+        $result = $this->money[$player];
         if ($result === false || $result == null) return false;
         return (int)$result;
     }
@@ -94,7 +121,7 @@ class PocketMoney extends PluginBase {
         if ($event->isCancelled()) return false;
         $amount = $event->getAmount();
         $player = $event->getPlayer();
-        $this->money->set($player->getName(), $amount);
+        $this->money[$player->getName()] = $amount;
         return true;
     }
 
@@ -113,8 +140,8 @@ class PocketMoney extends PluginBase {
         if ($event->isCancelled()) return false;
         $amount = $event->getAmount();
         $player = $event->getPlayer();
-        $now = $this->money->get($player->getName());
-        $this->money->set($player->getName(), $now+$amount);
+        $now = $this->money[$player->getName()];
+        $this->money[$player->getName()] = $now+$amount;
     }
 
     /**
@@ -132,8 +159,8 @@ class PocketMoney extends PluginBase {
         if ($event->isCancelled()) return false;
         $amount = $event->getAmount();
         $player = $event->getPlayer();
-        $now = $this->money->get($player->getName());
-        $this->money->set($player->getName(), $now-$amount);
+        $now = $this->money[$player->getName()];
+        $this->money[$player->getName()] = $now-$amount;
         return true;
     }
 
@@ -145,7 +172,7 @@ class PocketMoney extends PluginBase {
         if ($this->existsAccount($player)) return false;
         $player = $player instanceof Player ? $player->getName() : $player;
         $default = $this->config["default-money"];
-        $this->money->set($player, $default);
+        $this->money[$player] = $default;
         return true;
     }
 
@@ -155,7 +182,7 @@ class PocketMoney extends PluginBase {
      */
     public function existsAccount($player) :bool {
         $player = $player instanceof Player ? $player->getName() : $player;
-        return $this->money->exists($player);
+        return isset($this->money[$player]);
     }
 
 }

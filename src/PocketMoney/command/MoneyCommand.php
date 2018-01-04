@@ -48,13 +48,14 @@ class MoneyCommand extends PluginCommand {
     public function execute(CommandSender $sender, string $commandLabel, array $args) {
         //TODO: run sub commands
         if (!isset($args[0]) || !isset($this->subCommands[$args[0]])) {
-            $sender->sendMessage(str_ireplace("{USAGE}", $this->getUsage(), $this->getPlugin()->getMessage("money-usage")));
+            $sender->sendMessage(str_ireplace("{USAGE}", $this->getUsage(), $this->getPlugin()->getMessage("command-usage")));
             return false;
         }
         $subCommand = $this->commandObjects[$this->subCommands[array_shift($args)]];
         if ($sender->hasPermission($subCommand->getPermission())) {
             if (!$subCommand->execute($sender, $args)) {
-                $sender->sendMessage(str_ireplace("{USAGE}", "/money " . $subCommand->getUsage(), $this->getPlugin()->getMessage("money-usage")));
+                $sender->sendMessage(str_ireplace("{USAGE}", "/money " . $subCommand->getUsage(), $this->getPlugin()->getMessage("command-usage"))."\n".
+                    str_ireplace("{DESCRIPTION}", $subCommand->getDescription(), $this->getPlugin()->getMessage("command-description")));
                 return false;
             } else return true;
         } else {

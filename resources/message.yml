@@ -1,5 +1,6 @@
 #command
-money-usage: "§e[ PocketMoney ] 사용법:{USAGE}"
+command-usage: "§e[ PocketMoney ] 사용법: {USAGE}"
+command-description: "§e[ PocketMoney ] 설명: {DESCRIPTION}"
 permission-denied: "§y[ PocketMoney ] 해당 명령어의 권한을 가지고 있지 않습니다."
 command-error: "§e[ PocketMoney ] 명령어 실행중 에러가 발생하였습니다.!"
 set-command: "§e[ PocketMoney ] {ISSUER}가 {PLAYER}의 돈을 {AMOUNT}로 설정하였습니다."
