@@ -51,27 +51,27 @@ class PocketMoney extends PluginBase {
     public static function getApi() :PocketMoney {
         return self::$api;
     }
-
+    
     /**
      * @param string $key
      * @return string|null
      */
-    public function getMessage(string $key) {
-        return $this->message[$key];
+    public function getMessage(string $key) :?string {
+        return $this->message[$key] ?? null;
     }
-
-    public function  getSetting(string $key) {
-        return $this->config[$key];
+    
+    /**
+     * @param string $key
+     * @return string|null
+     */
+    public function  getSetting(string $key) :?string  {
+        return $this->config[$key] ?? null;
     }
-
-    public function getAllMoney() :array {
-        return $this->money;
-    }
-
+    
     public function getRankMaxPage(int $banned_cnt) :int {
         return (int)ceil((count($this->money) - $banned_cnt) / 10);
     }
-
+    
     /**
      * @param int $page
      * @return array
@@ -162,6 +162,13 @@ class PocketMoney extends PluginBase {
         $now = $this->money[$player->getName()];
         $this->money[$player->getName()] = $now-$amount;
         return true;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getAllMoney() :array {
+        return $this->money;
     }
 
     /**
