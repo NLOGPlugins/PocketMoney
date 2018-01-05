@@ -159,13 +159,12 @@ class PocketMoney extends PluginBase {
     public function setMoney($player, int $amount, $issuer = null) :bool {
         if ($amount < 0) return false;
         if (!$this->existsAccount($player)) $this->createAccount($player);
-        $player = $player instanceof Player ? $player : $this->getServer()->getPlayer($player);
+        $player = $player instanceof Player ? $player->getName() : $player;
         $event = new SetMoneyEvent($this, $player, $amount, $issuer);
         $this->getServer()->getPluginManager()->callEvent($event);
         if ($event->isCancelled()) return false;
         $amount = $event->getAmount();
-        $player = $event->getPlayer();
-        $this->money[$player->getName()] = $amount;
+        $this->money[$event->getPlayer()] = $amount;
         return true;
     }
 
@@ -178,8 +177,8 @@ class PocketMoney extends PluginBase {
     public function addMoney($player, int $amount, $issuer = null) :bool {
         if ($amount < 0) return false;
         if (!$this->existsAccount($player)) $this->createAccount($player);
-        $player = $player instanceof Player ? $player : $this->getServer()->getPlayer($player);
-        $event = new SetMoneyEvent($this, $this->getServer()->getPlayer($player), $amount, $issuer);
+        $player = $player instanceof Player ? $player->getName() : $player;
+        $event = new SetMoneyEvent($this, $player, $amount, $issuer);
         $this->getServer()->getPluginManager()->callEvent($event);
         if ($event->isCancelled()) return false;
         $amount = $event->getAmount();
@@ -197,8 +196,8 @@ class PocketMoney extends PluginBase {
     public function reduceMoney($player, int $amount, $issuer = null) :bool {
         if ($amount < 0) return false;
         if (!$this->existsAccount($player)) $this->createAccount($player);
-        $player = $player instanceof Player ? $player : $this->getServer()->getPlayer($player);
-        $event = new ReduceMoneyEvent($this, $this->getServer()->getPlayer($player), $amount, $issuer);
+        $player = $player instanceof Player ? $player->getName() : $player;
+        $event = new ReduceMoneyEvent($this, $player, $amount, $issuer);
         $this->getServer()->getPluginManager()->callEvent($event);
         if ($event->isCancelled()) return false;
         $amount = $event->getAmount();
