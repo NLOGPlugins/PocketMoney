@@ -80,8 +80,8 @@ class PocketMoney extends PluginBase {
     	foreach ($this->getServer()->getNameBans()->getEntries() as $entry) {
     		$banned[] = $entry->getName();
     	}
-    	$temp = [];
-		$i = 1;
+    	$result = [];
+	$i = 1;
     	foreach ($this->money as $p => $m) {
     		if (isset($banned[$p])) {
     			continue;
@@ -89,14 +89,9 @@ class PocketMoney extends PluginBase {
     		if (!$addOp && isset($ops[$p])) {
     			continue;
     		}
-    		$temp[$i++] = $p;
+    		$result[$i++] = $p;
     	};
-    	/*$result = [];
-    	$i = count($temp);
-    	foreach ($temp as $p) {
-    		$result[$i--] = $p;
-    	}*/
-    	return $temp;
+    	return $result;
     }
     
     /**
