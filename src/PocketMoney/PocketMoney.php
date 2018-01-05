@@ -81,6 +81,7 @@ class PocketMoney extends PluginBase {
     		$banned[] = $entry->getName();
     	}
     	$temp = [];
+		$i = 1;
     	foreach ($this->money as $p => $m) {
     		if (isset($banned[$p])) {
     			continue;
@@ -88,14 +89,14 @@ class PocketMoney extends PluginBase {
     		if (!$addOp && isset($ops[$p])) {
     			continue;
     		}
-    		$temp[] = $p;
+    		$temp[$i++] = $p;
     	};
-    	$result = [];
+    	/*$result = [];
     	$i = count($temp);
     	foreach ($temp as $p) {
     		$result[$i--] = $p;
-    	}
-    	return $result;
+    	}*/
+    	return $temp;
     }
     
     /**
@@ -128,12 +129,12 @@ class PocketMoney extends PluginBase {
     public function getRankPage(int $page) :array {
     	$result = [];
     	$ranks = $this->getRanks();
-    	$max = $this->getRankMaxPage(count($banned));
+    	$max = $this->getRankMaxPage(count($this->getServer()->getNameBans()->getEntries()));
     	$i = 1;
     	$page = $page < 1 ? 1 : ($page > $max ? $max : $page);
     	foreach ($ranks as $rank => $player) {
-    		if (((int) ceil($i / 10)) == $page) {
-    			$result[$i] = $player;
+    		if (intval(ceil($i / 10)) === $page) {
+    			$result[$i++] = $player;
     		}
     	}
         return $result;
