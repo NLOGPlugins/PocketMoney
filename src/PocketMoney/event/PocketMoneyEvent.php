@@ -15,25 +15,25 @@ class PocketMoneyEvent extends PluginEvent {
     /**
      * PocketMoneyEvent constructor.
      * @param Plugin $plugin
-     * @param Player $player
+     * @param string $player
      * @param int $amount
      * @param $issuer
      */
-    public function __construct(Plugin $plugin, Player $player, int $amount, $issuer = null) {
+    public function __construct(Plugin $plugin, $player, int $amount, $issuer = null) {
         parent::__construct($plugin);
     }
 
     /**
-     * @return Player
+     * @return string
      */
-    public function getPlayer() :Player {
+    public function getPlayer() :string {
         return $this->player;
     }
 
     /**
-     * @param Player $player
+     * @param string $player
      */
-    public function setPlayer(Player $player) {
+    public function setPlayer(string $player) {
         $this->player = $player;
     }
 
