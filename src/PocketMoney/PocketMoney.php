@@ -29,7 +29,7 @@ class PocketMoney extends PluginBase {
     }
 
     public function onEnable() {
-        self:$api = $this;
+        self::$api = $this;
         $this->getServer()->getCommandMap()->register("money", new MoneyCommand($this));
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
         $this->getServer()->getScheduler()->scheduleDelayedRepeatingTask(new AutoSaveTask($this), 20*60*1, 20*60*1);
