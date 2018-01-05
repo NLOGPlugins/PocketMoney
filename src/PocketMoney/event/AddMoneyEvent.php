@@ -11,11 +11,11 @@ class AddMoneyEvent extends PocketMoneyEvent implements Cancellable {
     /**
      * SetMoneyEvent constructor.
      * @param Plugin $plugin
-     * @param Player $player
+     * @param string $player
      * @param int $amount
      * @param $issuer
      */
-    public function __construct(Plugin $plugin, Player $player, int $amount, $issuer = null) {
+    public function __construct(Plugin $plugin, string $player, int $amount, $issuer = null) {
         parent::__construct($plugin, $player, $amount, $issuer);
     }
 
