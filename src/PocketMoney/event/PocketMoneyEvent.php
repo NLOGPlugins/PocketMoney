@@ -21,6 +21,9 @@ class PocketMoneyEvent extends PluginEvent {
      */
     public function __construct(Plugin $plugin, string $player, int $amount, $issuer = null) {
         parent::__construct($plugin);
+        $this->player = $player;
+        $this->amount = $amount;
+        $this->issuer = $issuer;
     }
 
     /**
