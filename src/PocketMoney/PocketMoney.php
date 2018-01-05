@@ -11,9 +11,9 @@ use PocketMoney\task\AutoSaveTask;
 
 class PocketMoney extends PluginBase {
     /**
-     * @var PocketMoney $api
+     * @var null|PocketMoney $api
      */
-    private static $api;
+    private static $api = null;
     /**
      * @var array
      */
@@ -46,9 +46,9 @@ class PocketMoney extends PluginBase {
     }
 
     /**
-     * @return PocketMoney
+     * @return null|PocketMoney
      */
-    public static function getApi() :PocketMoney {
+    public static function getApi() :?PocketMoney {
         return self::$api;
     }
     
