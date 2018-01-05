@@ -13,7 +13,6 @@ class EventListener implements Listener {
     }
 
     public function onJoin(PlayerJoinEvent $event) {
-        //TODO: Create account if not exists
         if (!$this->plugin->existsAccount($event->getPlayer())) {
             $this->plugin->createAccount($event->getPlayer());
         }
