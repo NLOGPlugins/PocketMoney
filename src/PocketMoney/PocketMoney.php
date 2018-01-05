@@ -25,6 +25,10 @@ class PocketMoney extends PluginBase {
         $this->saveResource("config.yml");
         $this->message = (new Config($this->getDataFolder()."message.yml", Config::YAML))->getAll();
         $this->config = (new Config($this->getDataFolder()."config.yml", Config::YAML))->getAll();
+	$this->money = [];
+	foreach ((new Config($this->getDataFolder()."money.yml", Config::YAML))->getAll() as $pl => $money) {
+		$this->money[strtolower($pl)] = $money;
+	}
         $this->money = (new Config($this->getDataFolder()."money.yml", Config::YAML))->getAll();
     }
 
@@ -101,7 +105,7 @@ class PocketMoney extends PluginBase {
      */
     public function getRank($player) :?int {
     	$result = $this->getRanks();
-    	$player = $player instanceof Player ? $player->getName() : $player;
+    	$player = strtolower($player instanceof Player ? $player->getName() : $player);
     	if ($this->existsAccount($player)) {
     		foreach ($result as $rank => $name) {
     			if ($name === $player) {
@@ -140,7 +144,7 @@ class PocketMoney extends PluginBase {
      * @return int|bool
      */
     public function getMoney($player) {
-        $player = $player instanceof Player ? $player->getName() : $player;
+        $player = strtolower($player instanceof Player ? $player->getName() : $player);
         $result = $this->money[$player];
         if ($result === false || $result == null) return false;
         return (int) $result;
@@ -155,7 +159,7 @@ class PocketMoney extends PluginBase {
     public function setMoney($player, int $amount, $issuer = null) :bool {
         if ($amount < 0) return false;
         if (!$this->existsAccount($player)) $this->createAccount($player);
-        $player = $player instanceof Player ? $player->getName() : $player;
+        $player = strtolower($player instanceof Player ? $player->getName() : $player);
         $event = new SetMoneyEvent($this, $player, $amount, $issuer);
         $this->getServer()->getPluginManager()->callEvent($event);
         if ($event->isCancelled()) return false;
@@ -173,7 +177,7 @@ class PocketMoney extends PluginBase {
     public function addMoney($player, int $amount, $issuer = null) :bool {
         if ($amount < 0) return false;
         if (!$this->existsAccount($player)) $this->createAccount($player);
-        $player = $player instanceof Player ? $player->getName() : $player;
+        $player = strtolower($player instanceof Player ? $player->getName() : $player);
         $event = new SetMoneyEvent($this, $player, $amount, $issuer);
         $this->getServer()->getPluginManager()->callEvent($event);
         if ($event->isCancelled()) return false;
@@ -192,7 +196,7 @@ class PocketMoney extends PluginBase {
     public function reduceMoney($player, int $amount, $issuer = null) :bool {
         if ($amount < 0) return false;
         if (!$this->existsAccount($player)) $this->createAccount($player);
-        $player = $player instanceof Player ? $player->getName() : $player;
+        $player = strtolower($player instanceof Player ? $player->getName() : $player);
         $event = new ReduceMoneyEvent($this, $player, $amount, $issuer);
         $this->getServer()->getPluginManager()->callEvent($event);
         if ($event->isCancelled()) return false;
@@ -216,7 +220,7 @@ class PocketMoney extends PluginBase {
      */
     public function createAccount($player) :bool {
         if ($this->existsAccount($player)) return false;
-        $player = $player instanceof Player ? $player->getName() : $player;
+        $player = strtolower($player instanceof Player ? $player->getName() : $player);
         $default = $this->config["default-money"];
         $this->money[$player] = $default;
         return true;
@@ -227,7 +231,7 @@ class PocketMoney extends PluginBase {
      * @return bool
      */
     public function existsAccount($player) :bool {
-        $player = $player instanceof Player ? $player->getName() : $player;
+        $player = strtolower($player instanceof Player ? $player->getName() : $player);
         return isset($this->money[$player]);
     }
 
