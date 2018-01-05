@@ -16,7 +16,7 @@ class RankSubCommand extends SubCommand {
         $page = isset($args[0]) ? (int)$args[0] : 1;
         $max = count($this->getPlugin()->getServer()->getNameBans()->getEntries());
         $message = str_ireplace(["{PAGE}", "{MAX}"], [$page, $this->getPlugin()->getRankMaxPage($max)], $this->getPlugin()->getMessage("rank-prefix"));
-        $rank = $this->getPlugin()->getRank($page);
+        $rank = $this->getPlugin()->getRankPage($page);
         if ($rank === null) return false;
         foreach ($rank as $rank => $arr)
             $message .= "\n".str_ireplace(["{RANK}", "{PLAYER}", "{MONEY}"], [$rank, $arr[0], $arr[1]], $this->getPlugin()->getMessage("rank-format"));

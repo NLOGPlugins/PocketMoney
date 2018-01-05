@@ -22,11 +22,13 @@ class TakeSubCommand extends SubCommand {
      */
     public  function execute(CommandSender $sender, array $args): bool {
         if (!isset($args[0], $args[1]) || !is_numeric($args[1])) return false;
-        $player = $this->getPlugin()->getServer()->getPlayer($args[0]);
-        if (is_null($player)) $player = $args[0];
-        if ($this->getPlugin()->reduceMoney($player, $args[1], $sender)) {
-            $sender->sendMessage(str_ireplace(["{ISSUER}", "{AMOUNT}", "{PLAYER}"], [$sender->getName(), $args[1], $player->getName()], $this->getPlugin()->getMessage("take-command")));
-            $player->sendMessage(str_ireplace(["{ISSUER}", "{AMOUNT}", "{PLAYER}"], [$sender->getName(), $args[1], $player->getName()], $this->getPlugin()->getMessage("take-command")));
+        $player = $args[0];
+		if (!$this->getPlugin()->existsAccount($player)) {
+			$player = $sender->getName();
+		}
+        if ($this->getPlugin()->reduceMoney($player, $args[1], $player)) {
+            $sender->sendMessage(str_ireplace(["{ISSUER}", "{AMOUNT}", "{PLAYER}"], [$sender->getName(), $args[1], $player], $this->getPlugin()->getMessage("take-command")));
+            $player->sendMessage(str_ireplace(["{ISSUER}", "{AMOUNT}", "{PLAYER}"], [$sender->getName(), $args[1], $player], $this->getPlugin()->getMessage("take-command")));
             return true;
         } else {
             $sender->sendMessage($this->getPlugin()->getMeesage("command-error"));

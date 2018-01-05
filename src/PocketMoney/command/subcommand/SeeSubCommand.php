@@ -22,10 +22,10 @@ class SeeSubCommand extends SubCommand {
      */
     public  function execute(CommandSender $sender, array $args): bool {
         if (!isset($args[0])) return false;
-        $player = $this->getPlugin()->getServer()->getPlayer($args[0]);
+        $player = $args[0];
         $amount = $this->getPlugin()->getMoney($player->getName());
         if (is_null($player)) $player = $args[0];
-        $sender->sendMessage(str_ireplace(["{AMOUNT}", "{PLAYER}"], [$amount, $player->getName()], $this->getPlugin()->getMessage("see-command")));
+        $sender->sendMessage(str_ireplace(["{AMOUNT}", "{PLAYER}"], [$amount], $this->getPlugin()->getMessage("see-command")));
         return true;
     }
 
