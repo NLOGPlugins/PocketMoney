@@ -27,10 +27,10 @@ class SetSubCommand extends SubCommand {
         if (is_null($player)) $player = $args[0];
         if ($this->getPlugin()->setMoney($player, $args[1], $sender)) {
             $sender->sendMessage(str_ireplace(["{ISSUER}", "{AMOUNT}", "{PLAYER}"], [$sender->getName(), $args[1], $player], $this->getPlugin()->getMessage("set-command")));
-            if ($player = $this->owner->getServer()->getPlayer($player) instanceof Player) {
-				$player->sendMessage(str_ireplace(["{ISSUER}", "{AMOUNT}", "{PLAYER}"], [$sender->getName(), $args[1], $player], $this->getPlugin()->getMessage("set-command")));
+            if ($player = $this->getPlugin()->getServer()->getPlayer($player) instanceof Player) {
+		$player->sendMessage(str_ireplace(["{ISSUER}", "{AMOUNT}", "{PLAYER}"], [$sender->getName(), $args[1], $player], $this->getPlugin()->getMessage("set-command")));
             }
-			return true;
+	    return true;
         } else {
             $sender->sendMessage($this->getPlugin()->getMeesage("command-error"));
             return false;
