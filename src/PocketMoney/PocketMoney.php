@@ -183,8 +183,8 @@ class PocketMoney extends PluginBase {
         if ($event->isCancelled()) return false;
         $amount = $event->getAmount();
         $player = $event->getPlayer();
-        $now = $this->money[$player->getName()];
-        $this->money[$player->getName()] = $now+$amount;
+        $now = $this->money[$player];
+        $this->money[$player] = $now+$amount;
     }
 
     /**
