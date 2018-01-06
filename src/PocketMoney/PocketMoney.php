@@ -185,6 +185,7 @@ class PocketMoney extends PluginBase {
         $player = $event->getPlayer();
         $now = $this->money[$player];
         $this->money[$player] = $now+$amount;
+	return true;
     }
 
     /**
